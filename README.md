@@ -1,10 +1,33 @@
 # My ERC-721 implementation
 
-## Tasks
+# Tasks
 
 - [ ] Deploy contract to sepolia network
 - [ ] Check if it matches ERC-721 standard
-- [ ] ERC-165 Support
-- [ ] Use OpenZeppelin interface
+- [x] Install OpenZeppelin
 
 ## Contract functions
+
+- [x] Use OpenZeppelin interface
+- [ ] Implement balanceOf function
+- [ ] Implement ownerOf function
+- [ ] Implement safeTransferFrom function
+- [ ] Implement safeTransferFrom function
+- [ ] Implement transferFrom function
+- [ ] Implement approve function
+- [ ] Implement setApprovalForAll function
+- [ ] Implement getApproved function
+- [ ] Implement isApprovedForAll function
+- [ ] Add ERC-165 Support
+
+## Tests
+
+- [ ] Test balanceOf function
+- [ ] Test ownerOf function
+- [ ] Test safeTransferFrom function
+- [ ] Test safeTransferFrom function
+- [ ] Test transferFrom function
+- [ ] Test approve function
+- [ ] Test setApprovalForAll function
+- [ ] Test getApproved function
+- [ ] Test isApprovedForAll function
