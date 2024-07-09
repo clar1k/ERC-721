@@ -9,11 +9,11 @@
 ## Contract functions
 
 - [x] Use OpenZeppelin interface
-- [ ] Implement balanceOf function
-- [ ] Implement ownerOf function
-- [ ] Implement safeTransferFrom function
-- [ ] Implement safeTransferFrom function
+- [x] Implement balanceOf function
+- [x] Implement ownerOf function
 - [ ] Implement transferFrom function
+- [ ] Implement safeTransferFrom function
+- [ ] Implement safeTransferFrom function
 - [ ] Implement approve function
 - [ ] Implement setApprovalForAll function
 - [ ] Implement getApproved function

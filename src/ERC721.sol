@@ -4,6 +4,7 @@ import {IERC721} from "@openzeppelin/contracts/interfaces/IERC721.sol";
 
 abstract contract ERC721 is IERC721 {
     mapping(address owner => uint[] tokenIds) _ownerships;
+    mapping(uint tokenId => address owner) _ownedTokens;
     mapping(address owner => mapping(address spender => uint[] allowedTokenIds)) _allowances;
 
     function name() public pure returns (string memory) {
@@ -18,13 +19,15 @@ abstract contract ERC721 is IERC721 {
         return 30;
     }
 
-    function approve(address to, uint256 tokenId) external {}
-
     function balanceOf(address owner) external view returns (uint256 balance) {
         return _ownerships[owner].length;
     }
 
-    function ownerOf(uint256 tokenId) external view returns (address owner) {}
+    function ownerOf(uint256 tokenId) external view returns (address owner) {
+        return _ownedTokens[tokenId];
+    }
+
+    function approve(address to, uint256 tokenId) external {}
 
     function transferFrom(address from, address to, uint256 tokenId) external {
         require(from != address(0), "Zero address error");
