@@ -14,7 +14,7 @@
 - [x] Implement transferFrom function
 - [ ] Implement safeTransferFrom function
 - [ ] Implement safeTransferFrom function
-- [ ] Implement approve function
+- [x] Implement approve function
 - [ ] Implement setApprovalForAll function
 - [ ] Implement getApproved function
 - [ ] Implement isApprovedForAll function

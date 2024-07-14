@@ -27,7 +27,16 @@ abstract contract ERC721 is IERC721 {
         return _ownedTokens[tokenId];
     }
 
-    function approve(address to, uint256 tokenId) external {}
+    function approve(address to, uint256 tokenId) external {
+        bool hasTokenId = false;
+        for (uint index = 0; index < _ownerships[msg.sender].length; index++) {
+            if (_ownerships[msg.sender][index] == tokenId) {
+                hasTokenId = true;
+            }
+        }
+        require(!hasTokenId, "You don't have this token");
+        _allowances[msg.sender][to].push(tokenId);
+    }
 
     function transferFrom(address from, address to, uint256 tokenId) external {
         require(from != address(0), "Zero address error");
