@@ -34,17 +34,16 @@ abstract contract ERC721 is IERC721 {
         require(to != address(0), "Zero address error");
 
         bool hasTokenId = false;
+        uint tokenIndex = 0;
 
         for (uint index = 0; index < _ownerships[from].length; index++) {
             if (tokenId != _ownerships[from][index]) {
                 continue;
             }
+            tokenIndex = index;
             hasTokenId = true;
         }
-
-        if (!hasTokenId) {
-            revert("The from address does not have this token");
-        }
+        require(!hasTokenId, "The from address does not have this token");
 
         if (from != msg.sender) {
             require(
@@ -52,6 +51,7 @@ abstract contract ERC721 is IERC721 {
                 "User not allowed you to spent any of his tokens"
             );
             bool hasUserApprovedThisToken = false;
+
             for (
                 uint index = 0;
                 index < _allowances[from][msg.sender].length;
@@ -63,9 +63,22 @@ abstract contract ERC721 is IERC721 {
                     break;
                 }
             }
-            if (!hasUserApprovedThisToken) {
-                revert("User not allowed you to spent this token");
-            }
+            require(
+                !hasUserApprovedThisToken,
+                "User not allowed you to spent this token"
+            );
         }
+
+        removeTokenIdInOwnerships(tokenIndex, from);
+        _ownerships[to].push(tokenId);
+    }
+
+    function removeTokenIdInOwnerships(uint index, address _owner) private {
+        uint lastElement = _ownerships[_owner][_ownerships[_owner].length - 1];
+        _ownerships[_owner][_ownerships[_owner].length - 1] = _ownerships[
+            _owner
+        ][index];
+        _ownerships[_owner][index] = lastElement;
+        _ownerships[_owner].pop();
     }
 }

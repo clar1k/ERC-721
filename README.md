@@ -11,7 +11,7 @@
 - [x] Use OpenZeppelin interface
 - [x] Implement balanceOf function
 - [x] Implement ownerOf function
-- [ ] Implement transferFrom function
+- [x] Implement transferFrom function
 - [ ] Implement safeTransferFrom function
 - [ ] Implement safeTransferFrom function
 - [ ] Implement approve function
