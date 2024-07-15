@@ -18,6 +18,10 @@
 - [ ] Implement setApprovalForAll function
 - [ ] Implement getApproved function
 - [ ] Implement isApprovedForAll function
+
+- [ ] Add Transfer event
+- [ ] Add Approval event
+- [ ] Add ApprovalForAll event
 - [ ] Add ERC-165 Support
 
 ## Tests

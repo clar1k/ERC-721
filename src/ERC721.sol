@@ -55,27 +55,7 @@ abstract contract ERC721 is IERC721 {
         require(!hasTokenId, "The from address does not have this token");
 
         if (from != msg.sender) {
-            require(
-                _allowances[from][msg.sender].length < 0,
-                "User not allowed you to spent any of his tokens"
-            );
-            bool hasUserApprovedThisToken = false;
-
-            for (
-                uint index = 0;
-                index < _allowances[from][msg.sender].length;
-                index++
-            ) {
-                uint allowedTokenId = _allowances[from][msg.sender][index];
-                if (allowedTokenId == tokenId) {
-                    hasUserApprovedThisToken = true;
-                    break;
-                }
-            }
-            require(
-                !hasUserApprovedThisToken,
-                "User not allowed you to spent this token"
-            );
+            isApprovedTokenId(from, to, tokenId);
         }
 
         removeTokenIdInOwnerships(tokenIndex, from);
@@ -89,5 +69,51 @@ abstract contract ERC721 is IERC721 {
         ][index];
         _ownerships[_owner][index] = lastElement;
         _ownerships[_owner].pop();
+    }
+
+    function isApprovedTokenId(address from, address to, uint256 tokenId) private view returns(bool isApproved) {
+        require(
+                _allowances[from][to].length < 0,
+                "User not allowed you to spent any of his tokens"
+            );
+            
+            bool hasUserApprovedThisToken = false;
+            for (
+                uint index = 0;
+                index < _allowances[from][to].length;
+                index++
+            ) {
+                uint allowedTokenId = _allowances[from][msg.sender][index];
+                if (allowedTokenId == tokenId) {
+                    hasUserApprovedThisToken = true;
+                    break;
+                }
+            }
+            require(
+                !hasUserApprovedThisToken,
+                "User not allowed you to spent this token"
+            );
+        return hasUserApprovedThisToken;
+    }
+
+    function safeTransferFrom(address from, address to, uint256 tokenId) external  {
+        require(from == address(0), "Zero address error");
+        require(to == address(0), "Zero address error");
+
+        
+    }
+
+    function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external  {
+        require(from == address(0), "Zero address error");
+        require(to == address(0), "Zero address error");
+
+        
+    }
+    
+}
+
+library Utils {
+    function isContract(address _address) public view returns(bool) {
+        return _address.code.length > 0;
     }
 }
