@@ -54,8 +54,8 @@ abstract contract ERC721 is IERC721 {
         }
         require(!hasTokenId, "The from address does not have this token");
 
-        if (from != msg.sender) {
-            isApprovedTokenId(from, to, tokenId);
+        if (from != msg.sender) { // 1 !== 2, 
+            isApprovedTokenId(from, msg.sender, tokenId);
         }
 
         removeTokenIdInOwnerships(tokenIndex, from);
@@ -99,15 +99,60 @@ abstract contract ERC721 is IERC721 {
     function safeTransferFrom(address from, address to, uint256 tokenId) external  {
         require(from == address(0), "Zero address error");
         require(to == address(0), "Zero address error");
-
         
+        bool hasTokenId = false;
+        uint tokenIndex = 0;
+
+        for (uint index = 0; index < _ownerships[from].length; index++) {
+            if (tokenId != _ownerships[from][index]) {
+                continue;
+            }
+            tokenIndex = index;
+            hasTokenId = true;
+        }
+        require(!hasTokenId, "The from address does not have this token");
+
+        if(from != msg.sender) {
+            isApprovedTokenId(from, msg.sender, tokenId);
+        }
+        bool isContract = Utils.isContract(to);
+        
+        if(isContract) {
+            (bool success, bytes memory resultData) = to.call{ value: msg.value  }(abi.encodeWithSignature('onERC721Received(address, address, uint256)', msg.sender, from, tokenId)); 
+        }
+        
+        removeTokenIdInOwnerships(tokenIndex, from);
+        _ownerships[to].push(tokenId);    
+
     }
 
-    function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external  {
+    function safeTransferFrom(address from, address payable to, uint256 tokenId, bytes calldata data) external payable   {
         require(from == address(0), "Zero address error");
         require(to == address(0), "Zero address error");
-
         
+        bool hasTokenId = false;
+        uint tokenIndex = 0;
+
+        for (uint index = 0; index < _ownerships[from].length; index++) {
+            if (tokenId != _ownerships[from][index]) {
+                continue;
+            }
+            tokenIndex = index;
+            hasTokenId = true;
+        }
+        require(!hasTokenId, "The from address does not have this token");
+
+        if(from != msg.sender) {
+            isApprovedTokenId(from, msg.sender, tokenId);
+        }
+        bool isContract = Utils.isContract(to);
+        
+        if(isContract) {
+            (bool success, bytes memory resultData) = to.call{ value: msg.value  }(abi.encodeWithSignature('onERC721Received(address, address, uint256, bytes)', msg.sender, from, tokenId, data)); 
+        }
+        
+        removeTokenIdInOwnerships(tokenIndex, from);
+        _ownerships[to].push(tokenId);
     }
     
 }

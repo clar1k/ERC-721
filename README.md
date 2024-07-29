@@ -12,8 +12,8 @@
 - [x] Implement balanceOf function
 - [x] Implement ownerOf function
 - [x] Implement transferFrom function
-- [ ] Implement safeTransferFrom function
-- [ ] Implement safeTransferFrom function
+- [x] Implement safeTransferFrom function
+- [x] Implement safeTransferFrom with bytes calldata data args function
 - [x] Implement approve function
 - [ ] Implement setApprovalForAll function
 - [ ] Implement getApproved function
